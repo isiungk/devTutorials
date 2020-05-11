@@ -1,4 +1,4 @@
-# webpack Guides - Getting Started
+# webpack Guides - AssetManagement
 
 1. 初始化项目 
    Initialize the project.
