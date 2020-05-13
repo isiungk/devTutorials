@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <title>Simple setInterval clock</title>
+</head>
+<body>
+    <div class="clock">...</div>
+    <div style="padding: .5rem 0 0;">
+        <button name="btnSwitch" id="btnSwitch">START</button>
+        <button name="btnReset" id="btnReset">Reset</button>
+    </div>
+    <hr />
+    <div>
+        <h4 id="递归setTimeout和setInterval有何不同？">递归setTimeout()和setInterval()有何不同？</h4>
+        <ul>
+            <li>递归 <code>setTimeout()</code> 保证执行之间的延迟相同，例如在上述情况下为100ms。 代码将运行，然后在它再次运行之前等待100ms，因此无论代码运行多长时间，间隔都是相同的。</li>
+            <li>使用 <code>setInterval()</code> 的示例有些不同。 我们选择的间隔包括执行我们想要运行的代码所花费的时间。假设代码需要40毫秒才能运行 - 然后间隔最终只有60毫秒。</li>
+            <li>当递归使用 <code>setTimeout()</code> 时，每次迭代都可以在运行下一次迭代之前计算不同的延迟。 换句话说，第二个参数的值可以指定在再次运行代码之前等待的不同时间（以毫秒为单位）。</li>
+        </ul>
+        <p>当你的代码有可能比你分配的时间间隔，花费更长时间运行时，最好使用递归的 <code>setTimeout()</code> - 这将使执行之间的时间间隔保持不变，无论代码执行多长时间，你不会得到错误。</p>
+    </div>
+
+    <script>
+        // Store references
+        const clock     = document.querySelector('.clock')
+        const btnSwitch = document.querySelector('#btnSwitch');
+        const btnReset  = document.querySelector('#btnReset');
+
+        // Store clock
+        let hours, minutes, seconds;
+
+        // Store counter
+        let totalSeconds = 0;
+
+        // Store status
+        let isStarted = false;
+
+        // Store the Interval
+        let myCounter;
+
+        // ------------------------
+        // Initialize at begining.
+        // ------------------------
+        resetCounter();
+
+        // ------------------------
+        // Button actions
+        // ------------------------
+        // Switch button event.
+        btnSwitch.addEventListener('click', () => {
+            if (isStarted) {
+                btnSwitch.textContent = "START"
+                isStarted = false;
+                clearInterval(myCounter);
+            } else {
+                btnSwitch.textContent = "STOP"
+                isStarted = true;
+                myCounter = setInterval(beginCounter, 1000);
+            }
+        });
+
+        // Reset button event.
+        btnReset.addEventListener('click', () => {
+            isStarted = false;
+            clearInterval(myCounter);
+            resetCounter()
+        });        
+
+        // ------------------------
+        // Helper functions
+        // ------------------------
+
+        // This is the counter.
+        function beginCounter() {
+            totalSeconds++;
+            updateCounter(totalSeconds);
+        }
+
+        // Reset, initialize.
+        function resetCounter() {
+            btnSwitch.textContent = "START"
+
+            clearInterval(myCounter);
+            myCounter = null;
+
+            totalSeconds = 0;
+            updateCounter(totalSeconds);
+        }
+
+        // Display the stopwatch according currnet data.
+        function updateCounter(totalSeconds) {
+            hours   = parseInt(totalSeconds / 3600);
+            minutes = parseInt((totalSeconds % 3600) / 60);
+            seconds = parseInt(totalSeconds % 60);
+
+            clock.textContent = (hours < 10 ? ('0'+ hours) : hours)
+                              + ':' 
+                              + (minutes < 10 ? ('0' + minutes) : minutes)
+                              + ':' 
+                              + (seconds < 10 ? ('0' + seconds) : seconds);
+        }
+    </script>
+</body>
+</html>
