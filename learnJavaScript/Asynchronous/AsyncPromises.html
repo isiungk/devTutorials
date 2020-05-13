@@ -8,6 +8,8 @@
     <button style="display:block;">Fetch a cup of cofee!</button>
     <script>
         const btn = document.querySelector('button');
+        let image = document.querySelector('img');
+
         btn.addEventListener('click', () => {
             console.log('Your order is placed...');
 
@@ -17,15 +19,16 @@
                 }).then( (myBlob) => {
                     console.log('Enjoy it-:)');
                     displayImage(myBlob);
+                }).then(() => {
+                    console.log ('All done. Your coffee is here: ');
+                    console.log (image);
                 }).catch((error) => {
                     console.log('There has been a problem with your fetch operation: ' + error.message);
                 });
-
-            console.log ('Main thread continue...');
         });
 
         function displayImage(blob) {
-            let image = document.querySelector('img');
+            image = document.querySelector('img');
 
             if (! image) {
                 image = document.createElement('img');
