@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Simple forEach example</title>
+</head>
+<body>
+    <button>Show me GODs!</button>
+    <script>
+        const btn = document.querySelector('button');
+        btn.addEventListener('click', () => {
+            showGods();
+        });
+
+        function showGods() {
+            const gods = ['Apollo', 'Artemis', 'Ares', 'Zeus'];
+            let godBox = document.querySelector('ol');
+            if (! godBox) {
+                godBox = document.createElement('ol');
+            }
+            godBox.textContent = '';
+            document.body.appendChild(godBox);
+            gods.forEach(function (eachName, index){
+                godX = document.createElement('li');
+                godX.textContent = eachName;
+                godBox.appendChild(godX);
+                console.log(index + '. ' + eachName);
+            });
+        }
+    </script>
+</body>
+</html>
