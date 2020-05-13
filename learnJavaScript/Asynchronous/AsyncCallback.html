@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Simple XHR async callback example</title>
+</head>
+<body>
+    <button style="display:block;">Fetch a cup of cofee!</button>
+    <script>
+        const btn = document.querySelector('button');
+        btn.addEventListener('click', () => {
+            loadAsset(
+                'AsyncCallback.jpg', 
+                'blob', 
+                displayImage
+            );
+        });
+
+        function loadAsset(url, type, callback) {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', url);
+            xhr.responseType = type;
+
+            xhr.onload = function () {
+                callback(xhr.response);
+            }
+
+            xhr.send();
+        }
+
+        function displayImage(blob) {
+            let image = document.querySelector('img');
+
+            if (! image) {
+                image = document.createElement('img');
+                document.body.appendChild(image);
+            }
+            image.src = '';
+            let objectUrl = URL.createObjectURL(blob);
+            image.src = objectUrl;
+        }
+    </script>
+</body>
+</html>
