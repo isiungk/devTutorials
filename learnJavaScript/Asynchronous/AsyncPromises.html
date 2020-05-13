@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Simple XHR async callback example</title>
+</head>
+<body>
+    <button style="display:block;">Fetch a cup of cofee!</button>
+    <script>
+        const btn = document.querySelector('button');
+        btn.addEventListener('click', () => {
+            console.log('Your order is placed...');
+
+            fetch('AsyncCallback.jpg').then((response) => {
+                    console.log('Coffee is ready...');
+                    return response.blob();
+                }).then( (myBlob) => {
+                    console.log('Enjoy it-:)');
+                    displayImage(myBlob);
+                }).catch((error) => {
+                    console.log('There has been a problem with your fetch operation: ' + error.message);
+                });
+
+            console.log ('Main thread continue...');
+        });
+
+        function displayImage(blob) {
+            let image = document.querySelector('img');
+
+            if (! image) {
+                image = document.createElement('img');
+                document.body.appendChild(image);
+            }
+            image.src = '';
+            let objectUrl = URL.createObjectURL(blob);
+            image.src = objectUrl;
+        }
+    </script>
+</body>
+</html>
