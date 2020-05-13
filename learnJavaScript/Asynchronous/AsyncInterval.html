@@ -12,7 +12,7 @@
     </div>
     <hr />
     <div>
-        <h4 id="递归setTimeout和setInterval有何不同？">递归setTimeout()和setInterval()有何不同？</h4>
+        <h4>递归setTimeout()和setInterval()有何不同？</h4>
         <ul>
             <li>递归 <code>setTimeout()</code> 保证执行之间的延迟相同，例如在上述情况下为100ms。 代码将运行，然后在它再次运行之前等待100ms，因此无论代码运行多长时间，间隔都是相同的。</li>
             <li>使用 <code>setInterval()</code> 的示例有些不同。 我们选择的间隔包括执行我们想要运行的代码所花费的时间。假设代码需要40毫秒才能运行 - 然后间隔最终只有60毫秒。</li>
